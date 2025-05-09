@@ -19,7 +19,7 @@ public class VehiculoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<Vehiculo>>> GetVehiculos()
     {
-        var vehiculos = await _vehiculoRepositorio.GetVehiculos();
+        IEnumerable<Vehiculo> vehiculos = await _vehiculoRepositorio.GetVehiculos();
         return Ok(vehiculos);
     }
 

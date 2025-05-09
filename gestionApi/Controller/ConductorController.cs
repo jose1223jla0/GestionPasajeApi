@@ -19,7 +19,7 @@ public class ConductorController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<Conductor>>> GetConductores()
     {
-        var conductores = await _repositoryConductores.GetConductores();
+        IEnumerable<Conductor> conductores = await _repositoryConductores.GetConductores();
         return Ok(conductores);
     }
 
@@ -33,7 +33,7 @@ public class ConductorController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var conductorAgregado = await _repositoryConductores.AgregarConductor(conductor);
+        Conductor conductorAgregado = await _repositoryConductores.AgregarConductor(conductor);
         return Ok(conductorAgregado);
     }
 
@@ -60,7 +60,7 @@ public class ConductorController : ControllerBase
             return NotFound($"Conductor con ID {id} no encontrado");
         }
 
-        var conductorActualizado = await _repositoryConductores.ActualizarConductor(conductor);
+        Conductor conductorActualizado = await _repositoryConductores.ActualizarConductor(conductor);
         return Ok(conductorActualizado);
     }
 
@@ -91,7 +91,7 @@ public class ConductorController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Conductor>> BorrarConductor(int id)
     {
-        var conductor = await _repositoryConductores.GetConductor(id);
+        Conductor? conductor = await _repositoryConductores.GetConductor(id);
         if (conductor == null)
         {
             return NotFound($"Conductor con ID {id} no encontrado");

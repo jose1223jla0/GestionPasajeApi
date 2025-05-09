@@ -24,7 +24,7 @@ public class PasajeroController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<Pasajero>>> GetPasajeros()
     {
-        var pasajeros = await _repositoryPasajeroRepositorio.GetPasajeros();
+        IEnumerable<Pasajero> pasajeros = await _repositoryPasajeroRepositorio.GetPasajeros();
         return Ok(pasajeros);
     }
 
@@ -34,7 +34,7 @@ public class PasajeroController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PasajeroDto>> BuscarPorDni(string dni)
     {
-        var pasajero = await _pasajeroService.BuscarPorDni(dni);
+        PasajeroDto? pasajero = await _pasajeroService.BuscarPorDni(dni);
         if (pasajero == null)
         {
             return NotFound($"Pasajero con DNI {dni} no encontrado");

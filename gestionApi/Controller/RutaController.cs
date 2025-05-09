@@ -55,7 +55,7 @@ public class RutaController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var rutaAgregada = await _rutaReposiotorio.AgregarRuta(ruta);
+        Ruta rutaAgregada = await _rutaReposiotorio.AgregarRuta(ruta);
         return Ok(rutaAgregada);
     }
 
@@ -82,7 +82,7 @@ public class RutaController : ControllerBase
             return NotFound($"Ruta con ID {id} no encontrado");
         }
 
-        var rutaActualizada = await _rutaReposiotorio.ActualizarRuta(ruta);
+        Ruta rutaActualizada = await _rutaReposiotorio.ActualizarRuta(ruta);
         return Ok(rutaActualizada);
     }
 

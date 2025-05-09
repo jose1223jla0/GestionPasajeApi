@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "bkYSJ5sbz8iTbU+O0QyP45Q3p/z3h50EX0PAJ69drec=",
+  "Hash": "ZbMgjv2A0eDf82ePw9Q9bnzKzha0uj+DoUHZNA86u+c=",
   "Source": "gestionApi",
   "BasePath": "_content/gestionApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

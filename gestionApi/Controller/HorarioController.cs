@@ -19,7 +19,7 @@ public class HorarioController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<Horario>>> GetHorarios()
     {
-        var horarios = await _horarioRepositorio.GetHorarios();
+        IEnumerable<Horario> horarios = await _horarioRepositorio.GetHorarios();
         return Ok(horarios);
     }
 
@@ -61,13 +61,13 @@ public class HorarioController : ControllerBase
             return BadRequest($"El id {id}  no válido");
         }
 
-        var otenerIdHorario = await _horarioRepositorio.GetHorario(id);
+        Horario? otenerIdHorario = await _horarioRepositorio.GetHorario(id);
         if (otenerIdHorario == null)
         {
             return NotFound($"Horario con ID {id} no encontrado");
         }
 
-        var horarioActualizado = await _horarioRepositorio.ActualizarHorario(horario);
+        Horario horarioActualizado = await _horarioRepositorio.ActualizarHorario(horario);
         return Ok(horarioActualizado);
     }
 
@@ -81,7 +81,7 @@ public class HorarioController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var horarioAgregado = await _horarioRepositorio.AgregarHorario(horario);
+        Horario horarioAgregado = await _horarioRepositorio.AgregarHorario(horario);
         return Ok(horarioAgregado);
     }
 
