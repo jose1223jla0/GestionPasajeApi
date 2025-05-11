@@ -92,7 +92,7 @@ public class HorarioController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Horario>> BorrarHorario(int id)
     {
-        var existeHorario = await _horarioRepositorio.GetHorario(id);
+        Horario? existeHorario = await _horarioRepositorio.GetHorario(id);
         if (existeHorario == null)
         {
             return NotFound($"Horario con ID {id} no encontrado");

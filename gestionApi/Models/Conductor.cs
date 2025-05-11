@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace gestionApi.Models;
 
@@ -7,13 +8,15 @@ public class Conductor
     [Key]
     public int IdConductor { get; set; }
     [Required]
-    public string? NombConductor { get; set; }
+    public string? NombreConductor { get; set; }
     [Required]
-    public string? ApellConductor { get; set; }
+    public string? ApellidoConductor { get; set; }
     [Required]
-    public string? TelfConductor { get; set; }
+    public string? TelefonoConductor { get; set; }
     [Required]
     public bool EstadoConductor { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public DateTime FechaCreacionConductor { get; set; }
     /*=================================================================
                     //relaciones
     ===================================================================*/

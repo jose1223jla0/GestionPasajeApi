@@ -16,16 +16,18 @@ public class Vehiculo
     [Required]
     public string? ColorVehiculo { get; set; }
     [Required]
-    public int CapVehiculo { get; set; }
+    public int CapacidadVehiculo { get; set; }
     [Required]
     public bool EstadoVehiculo { get; set; }
     [Required]
     [ForeignKey(nameof(IdConductor))]
     public int IdConductor { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public DateTime FechaCreacionVehiculo { get; set; }
     /*==================================================================
                         relaciones
     ====================================================================*/
     public Conductor? Conductor { get; set; }
     public List<Horario>? Horarios { get; set; } = new List<Horario>();
-    
+
 }

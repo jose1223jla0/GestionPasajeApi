@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace gestionApi.Models;
 
@@ -13,9 +14,11 @@ public class Pasajero
     [Required]
     public string? DniPasajero { get; set; }
     [Required]
-    public string? TelefPasajero { get; set; }
+    public string? TelefonoPasajero { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public DateTime FechaCreacionPasajero { get; set; }
     /*=============================================================
                         // Relaciones
     ==============================================================*/
-    public List<Pasaje>? Pasajes { get; set; }= new List<Pasaje>();
+    public List<Pasaje>? Pasajes { get; set; } = new List<Pasaje>();
 }

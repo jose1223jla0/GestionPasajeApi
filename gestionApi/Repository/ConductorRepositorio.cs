@@ -35,8 +35,8 @@ public class ConductorRepositorio : IConductorRepositorio
 
     public async Task<Conductor> AgregarConductor(Conductor conductor)
     {
-        string mysql = @"INSERT INTO Conductor (NombConductor, ApellConductor, TelfConductor, EstadoConductor)
-                        VALUES (@NombConductor, @ApellConductor, @TelfConductor, @EstadoConductor);
+        string mysql = @"INSERT INTO Conductor (NombreConductor, ApellidoConductor, TelefonoConductor, EstadoConductor)
+                        VALUES (@NombreConductor, @ApellidoConductor, @TelefonoConductor, @EstadoConductor);
                         SELECT LAST_INSERT_ID();";
 
         conductor.IdConductor = await _bd.ExecuteScalarAsync<int>(mysql, conductor);
@@ -45,7 +45,7 @@ public class ConductorRepositorio : IConductorRepositorio
 
     public async Task<Conductor> ActualizarConductor(Conductor conductor)
     {
-        var mysql = "UPDATE Conductor SET NombConductor=@NombConductor, ApellConductor=@ApellConductor, TelfConductor=@TelfConductor, EstadoConductor=@EstadoConductor " +
+        var mysql = "UPDATE Conductor SET NombreConductor=@NombreConductor, ApellidoConductor=@ApellidoConductor, TelefonoConductor=@TelefonoConductor, EstadoConductor=@EstadoConductor " +
                             "WHERE IdConductor=@IdConductor";
        await _bd.ExecuteAsync(mysql, conductor);
         return conductor;

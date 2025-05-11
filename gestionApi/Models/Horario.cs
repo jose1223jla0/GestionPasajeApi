@@ -8,7 +8,7 @@ public class Horario
     [Key]
     public int IdHorario { get; set; }
     [Required]
-    public DateTime FechaSalida { get; set; } 
+    public DateTime FechaSalida { get; set; }
     [Required]
     public TimeSpan HoraSalida { get; set; }
     [Required]
@@ -19,8 +19,10 @@ public class Horario
     [ForeignKey(nameof(IdVehiculo))]
     public int IdVehiculo { get; set; }
     [Required]
-    [ForeignKey(nameof(IdRuta))]   
+    [ForeignKey(nameof(IdRuta))]
     public int IdRuta { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public DateTime FechaCreacionHorario { get; set; }
     /*==============================================================
                     //relaciones
     ================================================================*/

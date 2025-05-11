@@ -15,8 +15,11 @@ public class Pasaje
     [ForeignKey(nameof(IdPasajero))]
     public int IdPasajero { get; set; }
     [Required]
-    [ForeignKey(nameof(IdHorario))]   
+    [ForeignKey(nameof(IdHorario))]
     public int IdHorario { get; set; }
+
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public DateTime FechaCreacionPasaje { get; set; }
     /*===============================================
     //relaciones
     =================================================*/

@@ -24,8 +24,8 @@ public class PasajeroRepositorio : IPasajeroRepositorio
 
     public async Task InsertarPasajero(Pasajero pasajero)
     {
-        string mysql = "INSERT INTO Pasajero (NombrePasajero, ApellidoPasajero, DniPasajero, TelefPasajero) " +
-                       "VALUES (@NombrePasajero, @ApellidoPasajero, @DniPasajero, @TelefPasajero)";
+        string mysql = "INSERT INTO Pasajero (NombrePasajero, ApellidoPasajero, DniPasajero, TelefonoPasajero) " +
+                       "VALUES (@NombrePasajero, @ApellidoPasajero, @DniPasajero, @TelefonoPasajero)";
         
         pasajero.IdPasajero = await _db.ExecuteScalarAsync<int>(mysql, pasajero);
     }
