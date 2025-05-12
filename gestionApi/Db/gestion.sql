@@ -2,6 +2,7 @@ CREATE DATABASE VentaPasaje;
 USE VentaPasaje;
 
 -- DROP DATABASE VentaPasaje;
+
 CREATE TABLE PASAJERO
 (
     IdPasajero            INT         NOT NULL AUTO_INCREMENT,
@@ -9,10 +10,9 @@ CREATE TABLE PASAJERO
     ApellidoPasajero      VARCHAR(30) NOT NULL,
     DniPasajero           CHAR(8)     NOT NULL,
     TelefonoPasajero      CHAR(9)     NOT NULL,
-    FechaCreacionPasajero DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaCreacionPasajero DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (IdPasajero)
 );
-
 
 
 CREATE TABLE CONDUCTOR
@@ -22,7 +22,7 @@ CREATE TABLE CONDUCTOR
     ApellidoConductor      VARCHAR(30) NOT NULL,
     TelefonoConductor      CHAR(9)     NOT NULL,
     EstadoConductor        BOOLEAN     NOT NULL,
-    FechaCreacionConductor  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaCreacionConductor DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (IdConductor)
 );
 
@@ -33,7 +33,7 @@ CREATE TABLE RUTA
     DestinoRuta       VARCHAR(20) NOT NULL,
     DuracionRuta      TIME        NOT NULL,
     EstadoRuta        BOOLEAN     NOT NULL,
-    FechaCreacionRuta  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaCreacionRuta DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (IdRuta)
 );
 
@@ -47,7 +47,7 @@ CREATE TABLE VEHICULO
     CapacidadVehiculo     INT         NOT NULL,
     EstadoVehiculo        BOOLEAN     NOT NULL,
     IdConductor           INT         NOT NULL,
-    FechaCreacionVehiculo  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaCreacionVehiculo DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (IdVehiculo),
     FOREIGN KEY (IdConductor) REFERENCES CONDUCTOR (IdConductor)
 );
@@ -62,7 +62,7 @@ CREATE TABLE HORARIO
     EstadoHorario        BOOLEAN       NOT NULL,
     IdVehiculo           INT           NOT NULL,
     IdRuta               INT           NOT NULL,
-    FechaCreacionHorario  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaCreacionHorario DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (IdHorario),
     FOREIGN KEY (IdVehiculo) REFERENCES VEHICULO (IdVehiculo),
     FOREIGN KEY (IdRuta) REFERENCES RUTA (IdRuta)
@@ -74,23 +74,36 @@ CREATE TABLE PAGO
     MontoPago         DECIMAL(10, 2) NOT NULL,
     MetodoPago        VARCHAR(20)    NOT NULL,
     EstadoPago        BOOLEAN        NOT NULL,
-    FechaCreacionPago  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaCreacionPago DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (IdPago)
+);
+
+
+CREATE TABLE USUARIO
+(
+    IdUsuario            INT          NOT NULL AUTO_INCREMENT,
+    NombreUsuario        VARCHAR(8)   NOT NULL UNIQUE,
+    Contrasena           VARCHAR(255) NOT NULL,
+    EstadoUsuario        BOOLEAN      NOT NULL DEFAULT TRUE,
+    FechaCreacionUsuario DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (IdUsuario)
 );
 
 CREATE TABLE PASAJE
 (
-    IdPasaje            INT     NOT NULL AUTO_INCREMENT,
-    FechaventaPasaje    DATE    NOT NULL,
-    EstadoPasaje        BOOLEAN NOT NULL,
-    IdPasajero          INT     NOT NULL,
-    IdHorario           INT     NOT NULL,
-    IdPago              INT     NOT NULL,
-    FechaCreacionPasaje  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    IdPasaje            INT      NOT NULL AUTO_INCREMENT,
+    FechaventaPasaje    DATE     NOT NULL,
+    EstadoPasaje        BOOLEAN  NOT NULL,
+    IdPasajero          INT      NOT NULL,
+    IdHorario           INT      NOT NULL,
+    IdPago              INT      NOT NULL,
+    FechaCreacionPasaje DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    IdUsuario           INT      NOT NULL,
     PRIMARY KEY (IdPasaje),
     FOREIGN KEY (IdPasajero) REFERENCES PASAJERO (IdPasajero),
     FOREIGN KEY (IdHorario) REFERENCES HORARIO (IdHorario),
-    FOREIGN KEY (IdPago) REFERENCES PAGO (IdPago)
+    FOREIGN KEY (IdPago) REFERENCES PAGO (IdPago),
+    FOREIGN KEY (IdUsuario) REFERENCES USUARIO (IdUsuario)
 );
 
 
@@ -113,8 +126,8 @@ VALUES ('Carlos Alberto', 'Ramírez Bravo', '987654321', true);
 INSERT INTO CONDUCTOR (NombreConductor, ApellidoConductor, TelefonoConductor, EstadoConductor)
 VALUES ('Lucía', 'Pérez Gómez', '912345678', true);
 
-select *
-from CONDUCTOR;
+SELECT *
+FROM CONDUCTOR;
 
 -- ===================================================================
 -- RUTA
