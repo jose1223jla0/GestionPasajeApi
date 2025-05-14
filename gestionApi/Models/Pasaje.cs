@@ -29,5 +29,4 @@ public class Pasaje
     public Pasajero? Pasajero { get; set; }
     public Pago? Pago { get; set; }
     public Horario? Horario { get; set; }
-
 }

@@ -20,4 +20,5 @@ public class Usuario
                    //relaciones
     ===================================================================*/
     public List<Pasaje> Pasajes { get; set; } = new List<Pasaje>();
+    
 }
