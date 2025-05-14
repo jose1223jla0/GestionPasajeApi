@@ -14,11 +14,35 @@ public class UsuarioRepositorio : IUsuarioRepositorio
         _bd = new MySqlConnection(configuration.GetConnectionString("conexionMySQL"));
     }
 
+    public async Task<Usuario> AgregarUsuario(Usuario usuario)
+    {
+        string mysql = "INSERT INTO Usuario (NombreUsuario, ApellidoUsuario, Contrasena, EstadoUsuario) " +
+                        "VALUES (@NombreUsuario, @ApellidoUsuario, @Contrasena, @EstadoUsuario)";
+
+        usuario.IdUsuario = await _bd.ExecuteScalarAsync<int>(mysql, usuario);
+        return usuario;
+    }
 
     public async Task<Usuario?> GetUsuario(int id)
     {
         string mysql = "SELECT * FROM Usuario WHERE IdUsuario = @IdUsuario";
         Usuario? resultado = await _bd.QueryFirstOrDefaultAsync<Usuario>(mysql, new { IdUsuario = id });
         return resultado;
+    }
+
+    public async Task<IEnumerable<Usuario>> GetUsuarios()
+    {
+        string mysql = "SELECT * FROM Usuario";
+        IEnumerable<Usuario> resultado = await _bd.QueryAsync<Usuario>(mysql);
+        return resultado;
+    }
+
+    public async Task<Usuario> EditarUsuario(Usuario usuario)
+    {
+        string mysql = "UPDATE Usuario SET NombreUsuario = @NombreUsuario, ApellidoUsuario = @ApellidoUsuario, " +
+                        "Contrasena = @Contrasena, EstadoUsuario = @EstadoUsuario WHERE IdUsuario = @IdUsuario";
+
+        await _bd.ExecuteAsync(mysql, usuario);
+        return usuario;
     }
 }
