@@ -30,6 +30,7 @@ builder.Services.AddTransient<IPasajeroService, PasajeroService>();
 builder.Services.AddTransient<IHorarioRepositorio, HorarioRepositorio>();
 builder.Services.AddTransient<IRutaReposiotorio, RutaRepositorio>();
 builder.Services.AddTransient<IVehiculoRepositorio, VehiculoRepositorio>();
+builder.Services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
 
 /*==========================================================================================
  fin de area de servicio

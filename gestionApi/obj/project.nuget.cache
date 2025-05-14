@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "OCOWIQ5H/5Q=",
+  "dgSpecHash": "ldAWu/O+b9A=",
   "success": true,
   "projectFilePath": "C:\\Users\\LENOVO\\Desktop\\PasajeApi\\gestionApi\\gestionApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\LENOVO\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\LENOVO\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\LENOVO\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
     "C:\\Users\\LENOVO\\.nuget\\packages\\google.protobuf\\3.30.0\\google.protobuf.3.30.0.nupkg.sha512",

@@ -115,3 +115,4 @@ C:\Users\LENOVO\Desktop\PasajeApi\gestionApi\obj\Debug\net8.0\refint\gestionApi.
 C:\Users\LENOVO\Desktop\PasajeApi\gestionApi\obj\Debug\net8.0\gestionApi.pdb
 C:\Users\LENOVO\Desktop\PasajeApi\gestionApi\obj\Debug\net8.0\gestionApi.genruntimeconfig.cache
 C:\Users\LENOVO\Desktop\PasajeApi\gestionApi\obj\Debug\net8.0\ref\gestionApi.dll
+C:\Users\LENOVO\Desktop\PasajeApi\gestionApi\bin\Debug\net8.0\BCrypt.Net-Next.dll
