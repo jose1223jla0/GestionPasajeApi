@@ -24,6 +24,7 @@ public class UsuarioController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Usuario>> AgregarUsuario(Usuario usuario)
     {
         if (!ModelState.IsValid)
@@ -36,7 +37,18 @@ public class UsuarioController : ControllerBase
             return BadRequest("El usuario no puede ser nulo.");
         }
 
-        Usuario nuevoUsuario = await _usuarioRepositorio.AgregarUsuario(usuario);
-        return Ok(nuevoUsuario);
+        try
+        {
+            Usuario nuevoUsuario = await _usuarioRepositorio.AgregarUsuario(usuario);
+            return Ok(nuevoUsuario);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { mensaje = "Ocurrió un error inesperado." });
+        }
     }
 }

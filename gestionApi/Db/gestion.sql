@@ -1,6 +1,5 @@
 CREATE DATABASE VentaPasaje;
 USE VentaPasaje;
-
 -- DROP DATABASE VentaPasaje;
 
 CREATE TABLE PASAJERO
@@ -21,6 +20,7 @@ CREATE TABLE CONDUCTOR
     NombreConductor        VARCHAR(30) NOT NULL,
     ApellidoConductor      VARCHAR(30) NOT NULL,
     TelefonoConductor      CHAR(9)     NOT NULL,
+    DniConductor           VARCHAR(8)  NOT NULL ,
     EstadoConductor        BOOLEAN     NOT NULL,
     FechaCreacionConductor DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (IdConductor)
@@ -78,12 +78,14 @@ CREATE TABLE PAGO
     PRIMARY KEY (IdPago)
 );
 
+
 CREATE TABLE ROL
 (
-    IdRol            INT         NOT NULL AUTO_INCREMENT,
-    NombreRol        VARCHAR(20) NOT NULL,
+    IdRol     INT         NOT NULL AUTO_INCREMENT,
+    NombreRol VARCHAR(20) NOT NULL,
     PRIMARY KEY (IdRol)
 );
+
 
 CREATE TABLE USUARIO
 (
@@ -91,12 +93,11 @@ CREATE TABLE USUARIO
     NombreUsuario        VARCHAR(8)   NOT NULL UNIQUE,
     Contrasena           VARCHAR(255) NOT NULL,
     EstadoUsuario        BOOLEAN      NOT NULL DEFAULT TRUE,
-    FechaCreacionUsuario DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     IdRol                INT          NOT NULL,
-    FOREIGN KEY (IdRol) REFERENCES ROL(IdRol)
-    PRIMARY KEY (IdUsuario),
+    FechaCreacionUsuario DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (IdRol) REFERENCES ROL (IdRol),
+    PRIMARY KEY (IdUsuario)
 );
-
 
 
 CREATE TABLE PASAJE
@@ -130,11 +131,11 @@ CREATE TABLE ASIENTO
 -- ===================================================================
 -- CONDUCTOR
 -- ===================================================================
-INSERT INTO CONDUCTOR (NombreConductor, ApellidoConductor, TelefonoConductor, EstadoConductor)
-VALUES ('Carlos Alberto', 'Ramírez Bravo', '987654321', true);
+INSERT INTO CONDUCTOR (NombreConductor, ApellidoConductor, TelefonoConductor,DniConductor, EstadoConductor)
+VALUES ('Carlos Alberto', 'Ramírez Bravo', '987654321','10223320', true);
 
-INSERT INTO CONDUCTOR (NombreConductor, ApellidoConductor, TelefonoConductor, EstadoConductor)
-VALUES ('Lucía', 'Pérez Gómez', '912345678', true);
+INSERT INTO CONDUCTOR (NombreConductor, ApellidoConductor, TelefonoConductor,DniConductor, EstadoConductor)
+VALUES ('Lucía', 'Pérez Gómez', '912345678','20224420', true);
 
 SELECT *
 FROM CONDUCTOR;
@@ -174,6 +175,11 @@ FROM HORARIO h
 SELECT *
 FROM CONDUCTOR;
 
+-- ===================================================================
+-- ROL
+-- ===================================================================
 INSERT INTO ROL (NombreRol)
 VALUES ('administrador'),
        ('vendedor');
+
+SELECT *FROM ROL;

@@ -14,6 +14,7 @@ public class Conductor
     [Required]
     public string? TelefonoConductor { get; set; }
     [Required]
+    public string? DniConductor { get; set; }
     public bool EstadoConductor { get; set; }
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime FechaCreacionConductor { get; set; }

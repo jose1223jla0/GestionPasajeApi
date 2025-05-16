@@ -24,6 +24,13 @@ public class PasajeroRepositorio : IPasajeroRepositorio
 
     public async Task InsertarPasajero(Pasajero pasajero)
     {
+        string verificarPasajero = "SELECT COUNT(*) FROM Pasajero WHERE DniPasajero = @DniPasajero";
+        int existePasajero = await _db.ExecuteScalarAsync<int>(verificarPasajero, new { pasajero.DniPasajero });
+        if (existePasajero > 0)
+        {
+            throw new InvalidOperationException("El pasajero ya está registrado.");
+        }
+        
         string mysql = "INSERT INTO Pasajero (NombrePasajero, ApellidoPasajero, DniPasajero, TelefonoPasajero) " +
                        "VALUES (@NombrePasajero, @ApellidoPasajero, @DniPasajero, @TelefonoPasajero)";
         

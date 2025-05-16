@@ -15,7 +15,14 @@ public class UsuarioRepositorio : IUsuarioRepositorio
 
     public async Task<Usuario> AgregarUsuario(Usuario usuario)
     {
+        string verificarUsuario = "SELECT COUNT(*) FROM Usuario WHERE NombreUsuario = @NombreUsuario";
+        int existeUsuario = await _bd.ExecuteScalarAsync<int>(verificarUsuario, new { usuario.NombreUsuario });
+
         usuario.Contrasena = BCrypt.Net.BCrypt.HashPassword(usuario.Contrasena);
+        if (existeUsuario > 0)
+        {
+            throw new InvalidOperationException("El usuario con ese nombre ya está registrado.");
+        }
 
         string mysql = "INSERT INTO Usuario (NombreUsuario, Contrasena, EstadoUsuario, IdRol) " +
                "VALUES (@NombreUsuario, @Contrasena, @EstadoUsuario, @IdRol)";

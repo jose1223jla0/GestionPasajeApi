@@ -26,6 +26,7 @@ public class ConductorController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Conductor>> AgregarConductor([FromBody] Conductor conductor)
     {
         if (!ModelState.IsValid)
@@ -33,8 +34,24 @@ public class ConductorController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        Conductor conductorAgregado = await _repositoryConductores.AgregarConductor(conductor);
-        return Ok(conductorAgregado);
+        if (conductor == null)
+        {
+            return BadRequest("El conductor no puede ser nulo.");
+        }
+
+        try
+        {
+            Conductor nuevoConductor = await _repositoryConductores.AgregarConductor(conductor);
+            return Ok(nuevoConductor);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { mensaje = "Ocurrió un error inesperado." });
+        }
     }
 
     [HttpPut]

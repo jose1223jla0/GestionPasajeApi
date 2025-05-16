@@ -19,24 +19,32 @@ public class ConductorRepositorio : IConductorRepositorio
         var resultado = await _bd.QueryAsync<Conductor>(mysql);
         return resultado;
     }
-    
+
     public async Task BorrarConductor(int id)
     {
-        string mysql="DELETE FROM Conductor WHERE IdConductor=@IdConductor";
+        string mysql = "DELETE FROM Conductor WHERE IdConductor=@IdConductor";
         await _bd.ExecuteAsync(mysql, new { IdConductor = id });
     }
 
     public async Task<Conductor?> GetConductor(int id)
     {
         string mysql = "SELECT * FROM Conductor WHERE IdConductor = @IdConductor";
-        var resultado= await _bd.QueryFirstOrDefaultAsync<Conductor>(mysql, new { IdConductor = id });
+        var resultado = await _bd.QueryFirstOrDefaultAsync<Conductor>(mysql, new { IdConductor = id });
         return resultado;
     }
 
     public async Task<Conductor> AgregarConductor(Conductor conductor)
     {
-        string mysql = @"INSERT INTO Conductor (NombreConductor, ApellidoConductor, TelefonoConductor, EstadoConductor)
-                        VALUES (@NombreConductor, @ApellidoConductor, @TelefonoConductor, @EstadoConductor);
+        string verificarConductor = "SELECT COUNT(*) FROM Conductor WHERE DniConductor = @DniConductor";
+        int existeConductor = await _bd.ExecuteScalarAsync<int>(verificarConductor, new { conductor.DniConductor });
+
+        if (existeConductor > 0)
+        {
+            throw new InvalidOperationException("El conductor con ese DNI ya está registrado.");
+        }
+
+        string mysql = @"INSERT INTO Conductor (NombreConductor, ApellidoConductor, TelefonoConductor,DniConducctor, EstadoConductor)
+                        VALUES (@NombreConductor, @ApellidoConductor, @TelefonoConductor, @DniConducctor, @EstadoConductor);
                         SELECT LAST_INSERT_ID();";
 
         conductor.IdConductor = await _bd.ExecuteScalarAsync<int>(mysql, conductor);
@@ -45,9 +53,9 @@ public class ConductorRepositorio : IConductorRepositorio
 
     public async Task<Conductor> ActualizarConductor(Conductor conductor)
     {
-        var mysql = "UPDATE Conductor SET NombreConductor=@NombreConductor, ApellidoConductor=@ApellidoConductor, TelefonoConductor=@TelefonoConductor, EstadoConductor=@EstadoConductor " +
+        var mysql = "UPDATE Conductor SET NombreConductor=@NombreConductor, ApellidoConductor=@ApellidoConductor, TelefonoConductor=@TelefonoConductor,DniConductor=@DniConducctor, EstadoConductor=@EstadoConductor " +
                             "WHERE IdConductor=@IdConductor";
-       await _bd.ExecuteAsync(mysql, conductor);
+        await _bd.ExecuteAsync(mysql, conductor);
         return conductor;
     }
 }
