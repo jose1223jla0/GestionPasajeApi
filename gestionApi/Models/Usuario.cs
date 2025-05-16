@@ -13,6 +13,8 @@ public class Usuario
     public string? Contrasena { get; set; }
     [Required]
     public bool EstadoUsuario { get; set; }
+    [Required]
+    public Rol IdRol { get; set; } 
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime FechaCreacionUsuario { get; set; }
 

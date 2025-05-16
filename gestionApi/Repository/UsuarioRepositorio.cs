@@ -4,6 +4,7 @@ using gestionApi.Models;
 using gestionApi.Repository.Interface;
 using MySql.Data.MySqlClient;
 namespace gestionApi.Repository;
+
 public class UsuarioRepositorio : IUsuarioRepositorio
 {
     private readonly IDbConnection _bd;
@@ -16,8 +17,9 @@ public class UsuarioRepositorio : IUsuarioRepositorio
     {
         usuario.Contrasena = BCrypt.Net.BCrypt.HashPassword(usuario.Contrasena);
 
-        string mysql = "INSERT INTO Usuario (NombreUsuario, Contrasena, EstadoUsuario) " +
-                       "VALUES (@NombreUsuario, @Contrasena, @EstadoUsuario)";
+        string mysql = "INSERT INTO Usuario (NombreUsuario, Contrasena, EstadoUsuario, IdRol) " +
+               "VALUES (@NombreUsuario, @Contrasena, @EstadoUsuario, @IdRol)";
+
         usuario.IdUsuario = await _bd.ExecuteScalarAsync<int>(mysql, usuario);
         return usuario;
     }
@@ -39,7 +41,8 @@ public class UsuarioRepositorio : IUsuarioRepositorio
     public async Task<Usuario> EditarUsuario(Usuario usuario)
     {
         string mysql = "UPDATE Usuario SET NombreUsuario = @NombreUsuario, " +
-                        "Contrasena = @Contrasena, EstadoUsuario = @EstadoUsuario WHERE IdUsuario = @IdUsuario";
+               "Contrasena = @Contrasena, EstadoUsuario = @EstadoUsuario, IdRol = @IdRol " +
+               "WHERE IdUsuario = @IdUsuario";
 
         await _bd.ExecuteAsync(mysql, usuario);
         return usuario;

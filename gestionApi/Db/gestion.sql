@@ -78,6 +78,12 @@ CREATE TABLE PAGO
     PRIMARY KEY (IdPago)
 );
 
+CREATE TABLE ROL
+(
+    IdRol            INT         NOT NULL AUTO_INCREMENT,
+    NombreRol        VARCHAR(20) NOT NULL,
+    PRIMARY KEY (IdRol)
+);
 
 CREATE TABLE USUARIO
 (
@@ -86,8 +92,12 @@ CREATE TABLE USUARIO
     Contrasena           VARCHAR(255) NOT NULL,
     EstadoUsuario        BOOLEAN      NOT NULL DEFAULT TRUE,
     FechaCreacionUsuario DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (IdUsuario)
+    IdRol                INT          NOT NULL,
+    FOREIGN KEY (IdRol) REFERENCES ROL(IdRol)
+    PRIMARY KEY (IdUsuario),
 );
+
+
 
 CREATE TABLE PASAJE
 (
@@ -163,3 +173,7 @@ FROM HORARIO h
 
 SELECT *
 FROM CONDUCTOR;
+
+INSERT INTO ROL (NombreRol)
+VALUES ('administrador'),
+       ('vendedor');
