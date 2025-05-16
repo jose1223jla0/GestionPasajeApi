@@ -18,7 +18,7 @@ public class HorarioRepositorio : IHorarioRepositorio
     public async Task<IEnumerable<Horario>> GetHorarios()
     {
         string mysql = "SELECT h.IdHorario,h.FechaSalida,h.HoraSalida, h.Precio,h.EstadoHorario ," +
-                       " v.IdVehiculo,v.PlacaVehiculo,v.MarcaVehiculo, v.ModeloVehiculo, v.CapVehiculo ," +
+                       " v.IdVehiculo,v.PlacaVehiculo,v.MarcaVehiculo, v.ModeloVehiculo, v.CapacidadVehiculo ," +
                        "v.EstadoVehiculo   " +
                        "FROM HORARIO h INNER JOIN VEHICULO v ON h.IdVehiculo = v.IdVehiculo";
         IEnumerable<Horario> resultado = await _bd.QueryAsync<Horario, Vehiculo, Horario>(mysql, MapHorarioVehiculo, splitOn: "IdVehiculo");

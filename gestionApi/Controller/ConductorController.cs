@@ -26,7 +26,7 @@ public class ConductorController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Conductor>> AgregarConductor([FromBody]Conductor conductor)
+    public async Task<ActionResult<Conductor>> AgregarConductor([FromBody] Conductor conductor)
     {
         if (!ModelState.IsValid)
         {
@@ -54,7 +54,7 @@ public class ConductorController : ControllerBase
             return BadRequest($"El id {id}  no válido");
         }
 
-        var obtenerIdConductor = await _repositoryConductores.GetConductor(id);
+        Conductor? obtenerIdConductor = await _repositoryConductores.GetConductor(id);
         if (obtenerIdConductor == null)
         {
             return NotFound($"Conductor con ID {id} no encontrado");
