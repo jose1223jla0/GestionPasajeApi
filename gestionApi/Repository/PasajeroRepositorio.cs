@@ -22,7 +22,7 @@ public class PasajeroRepositorio : IPasajeroRepositorio
 
     }
 
-    public async Task InsertarPasajero(Pasajero pasajero)
+    public async Task<Pasajero> AgregarPasajero(Pasajero pasajero)
     {
         string verificarPasajero = "SELECT COUNT(*) FROM Pasajero WHERE DniPasajero = @DniPasajero";
         int existePasajero = await _db.ExecuteScalarAsync<int>(verificarPasajero, new { pasajero.DniPasajero });
@@ -30,11 +30,12 @@ public class PasajeroRepositorio : IPasajeroRepositorio
         {
             throw new InvalidOperationException("El pasajero ya está registrado.");
         }
-        
+
         string mysql = "INSERT INTO Pasajero (NombrePasajero, ApellidoPasajero, DniPasajero, TelefonoPasajero) " +
                        "VALUES (@NombrePasajero, @ApellidoPasajero, @DniPasajero, @TelefonoPasajero)";
-        
+
         pasajero.IdPasajero = await _db.ExecuteScalarAsync<int>(mysql, pasajero);
+        return pasajero;
     }
 
     public async Task<IEnumerable<Pasajero>> GetPasajeros()

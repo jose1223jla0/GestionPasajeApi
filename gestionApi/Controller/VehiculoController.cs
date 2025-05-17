@@ -53,9 +53,23 @@ public class VehiculoController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-
-        Vehiculo vehiculoAgregado = await _vehiculoRepositorio.AgregarVehiculo(vehiculo);
-        return Ok(vehiculoAgregado);
+        if (vehiculo == null)
+        {
+            return BadRequest("El vehiculo no puede ser nulo");
+        }
+        try
+        {
+            Vehiculo nuevoVehiculo = await _vehiculoRepositorio.AgregarVehiculo(vehiculo);
+            return Ok(nuevoVehiculo);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { mensaje = "Ocurrió un error inesperado." });
+        }
     }
 
     [HttpPut]

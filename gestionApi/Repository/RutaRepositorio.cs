@@ -37,6 +37,13 @@ public class RutaRepositorio : IRutaReposiotorio
 
     public async Task<Ruta> AgregarRuta(Ruta ruta)
     {
+        string verificarRuta = "SELECT COUNT(*) FROM Ruta WHERE OrigenRuta = @OrigenRuta AND DestinoRuta = @DestinoRuta";
+        int existeRuta = await _bd.ExecuteScalarAsync<int>(verificarRuta, new { ruta.OrigenRuta, ruta.DestinoRuta });
+        if (existeRuta > 0)
+        {
+            throw new InvalidOperationException("La ruta ya está registrada.");
+        }
+
         string mysql = "INSERT INTO Ruta (OrigenRuta, DestinoRuta, DuracionRuta, EstadoRuta) " +
                        "VALUES (@OrigenRuta, @DestinoRuta, @DuracionRuta, @EstadoRuta)";
         ruta.IdRuta = await _bd.ExecuteScalarAsync<int>(mysql, ruta);

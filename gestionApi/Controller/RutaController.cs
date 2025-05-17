@@ -55,8 +55,23 @@ public class RutaController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        Ruta rutaAgregada = await _rutaReposiotorio.AgregarRuta(ruta);
-        return Ok(rutaAgregada);
+        if (ruta == null)
+        {
+            return BadRequest("La ruta no puede ser nulo.");
+        }
+        try
+        {
+            Ruta nuevaRuta = await _rutaReposiotorio.AgregarRuta(ruta);
+            return Ok(nuevaRuta);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { mensaje = "Ocurrió un error inesperado." });
+        }
     }
 
     [HttpPut]

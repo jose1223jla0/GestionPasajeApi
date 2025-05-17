@@ -35,7 +35,7 @@ public class ConductorRepositorio : IConductorRepositorio
 
     public async Task<Conductor> AgregarConductor(Conductor conductor)
     {
-        string verificarConductor = "SELECT COUNT(*) FROM Conductor WHERE DniConductor = @DniConductor";
+        string verificarConductor = "SELECT COUNT(*) FROM Conductor WHERE DniConductor = @DniConductor AND EstadoConductor = conductor.EstadoConductor";
         int existeConductor = await _bd.ExecuteScalarAsync<int>(verificarConductor, new { conductor.DniConductor });
 
         if (existeConductor > 0)

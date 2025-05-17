@@ -31,6 +31,12 @@ public class VehiculoRepositorio : IVehiculoRepositorio
 
     public async Task<Vehiculo> AgregarVehiculo(Vehiculo vehiculo)
     {
+        string verificarVehiculo = "SELECT COUNT(*) FROM vehiculo WHERE PlacaVehiculo = @PlacaVehiculo";
+        int existeVehiculo = await _bd.ExecuteScalarAsync<int>(verificarVehiculo, new { vehiculo.PlacaVehiculo });
+        if (existeVehiculo > 0)
+        {
+            throw new InvalidOperationException("El vehiculo ya está registrado.");
+        }
         string mysql =
             "INSERT INTO vehiculo (PlacaVehiculo, MarcaVehiculo, ModeloVehiculo, CapVehiculo, EstadoVehiculo, IdConductor) " +
             "VALUES (@PlacaVehiculo, @MarcaVehiculo, @ModeloVehiculo,@CapVehiculo, @EstadoVehiculo, @IdConductor)";

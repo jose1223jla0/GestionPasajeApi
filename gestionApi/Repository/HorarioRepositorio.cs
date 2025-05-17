@@ -35,6 +35,7 @@ public class HorarioRepositorio : IHorarioRepositorio
 
     public async Task<Horario> AgregarHorario(Horario horario)
     {
+        
         string mysql = "INSERT INTO Horario (FechaSalida, HoraSalida, Precio,EstadoHorario, IdVehiculo,IdRuta) " +
                        "VALUES (@FechaSalida, @HoraSalida, @Precio,EstadoHorario, @IdVehiculo,@IdRuta)";
         horario.IdHorario = await _bd.ExecuteScalarAsync<int>(mysql, horario);

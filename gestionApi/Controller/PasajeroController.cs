@@ -10,13 +10,13 @@ namespace gestionApi.Controller;
 [Route("api/[controller]")]
 public class PasajeroController : ControllerBase
 {
-    private readonly IPasajeroRepositorio _repositoryPasajeroRepositorio;
+    private readonly IPasajeroRepositorio _pasajeroRepositorio;
     private readonly IPasajeroService _pasajeroService;
 
 
-    public PasajeroController(IPasajeroRepositorio repositoryPasajeroRepositorio, IPasajeroService pasajeroService)
+    public PasajeroController(IPasajeroRepositorio pasajeroRepositorio, IPasajeroService pasajeroService)
     {
-        _repositoryPasajeroRepositorio = repositoryPasajeroRepositorio;
+        _pasajeroRepositorio = pasajeroRepositorio;
         _pasajeroService = pasajeroService;
     }
 
@@ -24,7 +24,7 @@ public class PasajeroController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<Pasajero>>> GetPasajeros()
     {
-        IEnumerable<Pasajero> pasajeros = await _repositoryPasajeroRepositorio.GetPasajeros();
+        IEnumerable<Pasajero> pasajeros = await _pasajeroRepositorio.GetPasajeros();
         return Ok(pasajeros);
     }
 
@@ -34,6 +34,7 @@ public class PasajeroController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PasajeroDto>> BuscarPorDni(string dni)
     {
+
         PasajeroDto? pasajero = await _pasajeroService.BuscarPorDni(dni);
         if (pasajero == null)
         {
@@ -53,7 +54,24 @@ public class PasajeroController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        await _repositoryPasajeroRepositorio.InsertarPasajero(pasajero);
-        return Ok(pasajero);
+        if (pasajero == null)
+        {
+            return BadRequest("El conductor no puede ser nulo");
+        }
+
+        try
+        {
+            Pasajero nuevoPasajero = await _pasajeroRepositorio.AgregarPasajero(pasajero);
+            return Ok(nuevoPasajero);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { mensaje = "Ocurrió un error inesperado" });
+        }
+
     }
 }
