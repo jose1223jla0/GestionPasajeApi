@@ -38,6 +38,14 @@ public class PasajeroRepositorio : IPasajeroRepositorio
         return pasajero;
     }
 
+    public async Task<Pasajero> EditarPasajero(Pasajero pasajero)
+    {
+        string mysql = "UPDATE Pasajero SET NombrePasajero=@NombrePasajero, ApellidoPasajero=@ApellidoPasajero, " +
+                       "DniPasajero=@DniPasajero, TelefonoPasajero=@TelefonoPasajero WHERE IdPasajero=@IdPasajero";
+        await _db.ExecuteAsync(mysql, pasajero);
+        return pasajero;
+    }
+
     public async Task<IEnumerable<Pasajero>> GetPasajeros()
     {
         var mysql = "SELECT * FROM Pasajero";

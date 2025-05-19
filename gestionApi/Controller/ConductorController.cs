@@ -1,9 +1,10 @@
 ﻿using gestionApi.Models;
 using gestionApi.Repository.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gestionApi.Controller;
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ConductorController : ControllerBase
@@ -27,7 +28,7 @@ public class ConductorController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Conductor>> AgregarConductor([FromBody] Conductor conductor)
+    public async Task<ActionResult<Conductor>> AgregarConductor([FromBody] Conductor? conductor)
     {
         if (!ModelState.IsValid)
         {
@@ -59,7 +60,7 @@ public class ConductorController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Conductor>> ActualizarConductor(int id, Conductor conductor)
+    public async Task<ActionResult<Conductor>> ActualizarConductor(int id, Conductor? conductor)
     {
         if (!ModelState.IsValid)
         {
@@ -70,15 +71,24 @@ public class ConductorController : ControllerBase
         {
             return BadRequest($"El id {id}  no válido");
         }
-
-        Conductor? obtenerIdConductor = await _repositoryConductores.GetConductor(id);
-        if (obtenerIdConductor == null)
+        if (conductor == null)
         {
-            return NotFound($"Conductor con ID {id} no encontrado");
+            return BadRequest("El conductor no puede ser nulo");
         }
 
-        Conductor conductorActualizado = await _repositoryConductores.ActualizarConductor(conductor);
-        return Ok(conductorActualizado);
+        try
+        {
+            Conductor conductorEditado = await _repositoryConductores.ActualizarConductor(conductor);
+            return Ok(conductorEditado);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, new { mensaje = "Ocurrió un error inesperado" });
+        }
     }
 
     [HttpGet("{id:int}")]

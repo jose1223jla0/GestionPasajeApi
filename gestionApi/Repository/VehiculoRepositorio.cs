@@ -52,4 +52,11 @@ public class VehiculoRepositorio : IVehiculoRepositorio
         await _bd.ExecuteAsync(mysql, vehiculo);
         return vehiculo;
     }
+
+    public async Task<Vehiculo> EditarVehiculo(Vehiculo vehiculo)
+    {
+        string mysql = "UPDATE vehiculo SET EstadoVehiculo=@EstadoVehiculo WHERE IdVehiculo=@IdVehiculo";
+        await _bd.ExecuteAsync(mysql, vehiculo);
+        return vehiculo;
+    }
 }

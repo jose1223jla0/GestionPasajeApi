@@ -1,9 +1,10 @@
 ﻿using gestionApi.Models;
 using gestionApi.Repository.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gestionApi.Controller;
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class HorarioController : ControllerBase

@@ -8,4 +8,5 @@ public interface IVehiculoRepositorio
     Task<Vehiculo?> GetVehiculo(int id);
     Task<Vehiculo> AgregarVehiculo(Vehiculo vehiculo);
     Task<Vehiculo> ActualizarVehiculo(Vehiculo vehiculo);
+    Task<Vehiculo> EditarVehiculo(Vehiculo vehiculo);
 }

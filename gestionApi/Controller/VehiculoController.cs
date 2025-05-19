@@ -1,9 +1,10 @@
 ﻿using gestionApi.Models;
 using gestionApi.Repository.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gestionApi.Controller;
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class VehiculoController : ControllerBase
@@ -47,7 +48,7 @@ public class VehiculoController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Vehiculo>> AgregarVehiculo(Vehiculo vehiculo)
+    public async Task<ActionResult<Vehiculo>> AgregarVehiculo(Vehiculo? vehiculo)
     {
         if (!ModelState.IsValid)
         {

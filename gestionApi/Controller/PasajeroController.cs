@@ -2,10 +2,11 @@
 using gestionApi.Models.ModelViewDTO;
 using gestionApi.Repository.Interface;
 using gestionApi.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gestionApi.Controller;
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class PasajeroController : ControllerBase
@@ -47,7 +48,7 @@ public class PasajeroController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Pasajero>> AgregarPasajero(Pasajero pasajero)
+    public async Task<ActionResult<Pasajero>> AgregarPasajero(Pasajero? pasajero)
     {
         if (!ModelState.IsValid)
         {
@@ -72,6 +73,5 @@ public class PasajeroController : ControllerBase
         {
             return StatusCode(500, new { mensaje = "Ocurrió un error inesperado" });
         }
-
     }
 }

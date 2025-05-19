@@ -1,9 +1,10 @@
 ﻿using gestionApi.Models;
 using gestionApi.Repository.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gestionApi.Controller;
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class RutaController : ControllerBase
@@ -48,7 +49,7 @@ public class RutaController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Ruta>> AgregarRuta(Ruta ruta)
+    public async Task<ActionResult<Ruta>> AgregarRuta(Ruta? ruta)
     {
         if (!ModelState.IsValid)
         {
